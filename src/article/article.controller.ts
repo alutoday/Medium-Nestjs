@@ -19,6 +19,8 @@ import { RequestUser } from 'src/auth/request-user.interface';
 import { ArticleEntity } from './entities/article.entity';
 import { JwtAuthGuardDetect } from 'src/auth/auth.guard.detect';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { FilterArticlesDto } from './dto/filter-article.dto';
+import { ListArticlesEntity } from './entities/list-articles.entity';
 
 
 @Controller('api/articles')
@@ -59,5 +61,21 @@ export class ArticleController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('slug') slug: string, @Req() req: RequestUser & Request) {
     return this.articleService.delete(slug, req.user.sub);
+  }
+
+  @UseGuards(JwtAuthGuardDetect)
+  @Get()
+  async findAll(@Query() query: FilterArticlesDto, @Req() req: RequestUser & Request) {
+    const userId = req.user?.sub;
+    const result = await this.articleService.findAll(query, userId);
+    return new ListArticlesEntity(result);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('feed')
+  async getFeed(@Query() query: { limit?: number; offset?: number }, @Req() req: RequestUser & Request) {
+    const userId = req.user?.sub;
+    const result = await this.articleService.feed(userId, query);
+    return new ListArticlesEntity(result);
   }
 }

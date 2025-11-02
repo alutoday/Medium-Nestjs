@@ -15,7 +15,8 @@ export class ArticleEntity {
       author: {
         username: article.author.username,
         bio: article.author.bio,
-        image: article.author.image
+        image: article.author.image,
+        following: article.isFollowing ?? false,
       },
     };
   }
