@@ -41,5 +41,20 @@ export class ProfileService {
 
     return { username: target.username, bio: target.bio, image: target.image, following: true };
   }
+
+   async unfollow(username: string, userId: number) {
+    const target = await this.prisma.user.findUnique({
+      where: { username },
+      select: { id: true, username: true, bio: true, image: true },
+    });
+    if (!target) throw new NotFoundException('Profile not found');
+    if (target.id === userId) return { ...target, following: false };
+    await this.prisma.follow.deleteMany({
+      where: { followerId: userId, followingId: target.id },
+    });
+
+    return { username: target.username, bio: target.bio, image: target.image, following: false };
+  }
   
+
 }

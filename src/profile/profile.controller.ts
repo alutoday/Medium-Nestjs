@@ -23,5 +23,12 @@ export class ProfileController {
     return new ProfileEntity(data);
   }
 
+  @Delete(':username/follow')
+  @UseGuards(JwtAuthGuard)
+  async unfollow(@Param('username') username: string, @Req() req: any) {
+    const data = await this.service.unfollow(username, req.user.sub);
+    return new ProfileEntity(data);
+  }
+
  
 }
