@@ -35,5 +35,21 @@ export class CommentController {
     );
     return { comment: new CommentEntity(comment) };
   }
+
+    @Get()
+  async findAll(
+    @Param('slug') slug: string,
+    @Query('limit') limit = 10,
+    @Query('offset') offset = 0,
+  ): Promise<{ comments: CommentEntity[] }> {
+    const comments = await this.commentService.findByArticleSlug(
+      slug,
+      +limit,
+      +offset,
+    );
+    return {
+      comments: comments.map((c) => new CommentEntity(c)),
+    };
+  }
   
 }
