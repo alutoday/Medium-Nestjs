@@ -32,4 +32,5 @@ export class UserService {
     const { id, password, createdAt, updatedAt, ...rest } = user;
     return rest;
   }
+  
 }
