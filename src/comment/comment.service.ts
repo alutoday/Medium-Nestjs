@@ -54,5 +54,23 @@ export class CommentService {
 
     return comments;
   }
+
+  async delete(slug: string, commentId: number, userId: number) {
+    const comment = await this.prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+    if (!comment) throw new NotFoundException('Comment not found');
+
+    const article = await this.prisma.article.findUnique({ where: { slug } });
+    if (!article || comment.articleId !== article.id)
+      throw new NotFoundException('Comment does not belong to article');
+
+    if (comment.authorId !== userId)
+      throw new ForbiddenException('Not allowed to delete this comment');
+
+    await this.prisma.comment.delete({ where: { id: commentId } });
+  }
+
+  
   
 }

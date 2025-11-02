@@ -51,5 +51,17 @@ export class CommentController {
       comments: comments.map((c) => new CommentEntity(c)),
     };
   }
+
+    @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async remove(
+    @Param('slug') slug: string,
+    @Param('id') id: string,
+    @Req() req: RequestUser & Request,
+  ) {
+    await this.commentService.delete(slug, +id, req.user.sub);
+    return { message: 'Comment deleted successfully' };
+  }
   
 }
