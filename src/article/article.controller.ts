@@ -78,4 +78,18 @@ export class ArticleController {
     const result = await this.articleService.feed(userId, query);
     return new ListArticlesEntity(result);
   }
+  
+  @UseGuards(JwtAuthGuard)
+  @Post(':slug/favorite')
+  async favorite(@Param('slug') slug: string, @Req() req: RequestUser & Request) {
+    const article = await this.articleService.favorite(slug, req.user.sub);
+    return new ArticleEntity(article);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':slug/favorite')
+  async unfavorite(@Param('slug') slug: string, @Req() req: RequestUser & Request) {
+    const article = await this.articleService.unfavorite(slug, req.user.sub);
+    return new ArticleEntity(article);
+  }
 }
