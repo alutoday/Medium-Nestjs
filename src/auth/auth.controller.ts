@@ -3,7 +3,7 @@ import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 
-@Controller('api/auth')
+@Controller('users')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
