@@ -23,7 +23,7 @@ import { FilterArticlesDto } from './dto/filter-article.dto';
 import { ListArticlesEntity } from './entities/list-articles.entity';
 
 
-@Controller('api/articles')
+@Controller('articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
