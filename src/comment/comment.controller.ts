@@ -17,7 +17,7 @@ import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { RequestUser } from 'src/auth/request-user.interface';
 import { CommentEntity } from './entities/comment.entity';
 
-@Controller('api/articles/:slug/comments')
+@Controller('articles/:slug/comments')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 

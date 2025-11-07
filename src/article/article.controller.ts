@@ -21,7 +21,7 @@ import { JwtAuthGuardDetect } from 'src/auth/auth.guard.detect';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
 
-@Controller('api/articles')
+@Controller('articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
