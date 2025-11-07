@@ -80,4 +80,5 @@ export class UserService {
     const { password, createdAt, updatedAt, ...publicUser } = user;
     return publicUser;
   }
+  
 }
