@@ -29,7 +29,16 @@ export class AuthService {
           password: hashedPassword,
         },
       });
-      return this.signToken(user.id, user.username, user.email);
+      const token = await this.signToken(user.id, user.username, user.email);
+      return {
+        user: {
+          email: user.email,
+          token: token.access_token,
+          username: user.username,
+          bio: user.bio,
+          image: user.image ?? null,
+        },
+      };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError && error.code === PRISMA_ERROR.UNIQUE) {
         throw new ForbiddenException('Email or username already taken');
@@ -49,11 +58,13 @@ export class AuthService {
     const token = await this.signToken(user.id, user.username, user.email);
     const { email, username, bio, image } = user;
     return {
-      email,
-      token: token.access_token,
-      username,
-      bio,
-      image,
+      user: {
+        email,
+        token: token.access_token,
+        username,
+        bio,
+        image: image ?? null,
+      },
     };
   }
 
