@@ -165,7 +165,6 @@ export class ArticleService {
     });
     await this.prisma.article.delete({ where: { slug } });
     return;
-<<<<<<< HEAD
   }
 
   async findAll(query: FilterArticlesDto, userId?: number) {
@@ -297,9 +296,5 @@ export class ArticleService {
     });
     return !!follow;
   }
-  
-=======
-  }  
->>>>>>> 8f2b7c8 (fixbug sunlint)
-  
 }
+
