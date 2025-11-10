@@ -19,6 +19,9 @@ model User {
  
   articles Article[]
   favorites FavoriteArticles[]
+  comments Comment[]
+
+
 }
 
 model Article {
@@ -34,6 +37,8 @@ model Article {
   author      User     @relation(fields: [authorId], references: [id])
 
   favorites   FavoriteArticles[]
+  comments Comment[]
+
 }
 
 model Tag {
@@ -51,3 +56,15 @@ model FavoriteArticles {
 
   @@unique([userId, articleId])
 }
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  article    Article  @relation(fields: [articleId], references: [id])
+  articleId  Int
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   Int
+}
+

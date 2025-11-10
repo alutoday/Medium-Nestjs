@@ -156,9 +156,6 @@ export class ArticleService {
     });
     await this.prisma.article.delete({ where: { slug } });
     return;
-  }
-
-
-  
+  }  
   
 }
