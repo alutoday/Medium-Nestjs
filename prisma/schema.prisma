@@ -80,3 +80,4 @@ model Follow {
   @@index([followerId])
   @@index([followingId])
 }
+

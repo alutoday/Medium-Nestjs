@@ -79,6 +79,5 @@ export class UserService {
   private mapUserToPublic(user: User) {
     const { password, createdAt, updatedAt, ...publicUser } = user;
     return publicUser;
-  }
-  
+  }  
 }
