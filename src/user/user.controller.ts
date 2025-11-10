@@ -27,3 +27,4 @@ export class UserController {
     return this.userService.buildUserResponse(userUpdated, token);
   }
 }
+
