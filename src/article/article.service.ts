@@ -165,6 +165,7 @@ export class ArticleService {
     });
     await this.prisma.article.delete({ where: { slug } });
     return;
+
   }
 
   async findAll(query: FilterArticlesDto, userId?: number) {
@@ -289,6 +290,7 @@ export class ArticleService {
     page,
     limit,
   };
+
 }
   async isFollowing(userId: number, authorId: number): Promise<boolean> {
     const follow = await this.prisma.follow.findFirst({
@@ -296,6 +298,7 @@ export class ArticleService {
     });
     return !!follow;
   }
+
 
   async favorite(slug: string, userId: number): Promise<FullArticle> {
     const article = await this.prisma.article.findUnique({
@@ -346,5 +349,5 @@ export class ArticleService {
     return this.buildSingleArticleResponse(article, userId);
   }
   
-  
 }
+
