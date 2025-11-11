@@ -69,8 +69,6 @@ export class CommentService {
       throw new ForbiddenException('Not allowed to delete this comment');
 
     await this.prisma.comment.delete({ where: { id: commentId } });
-  }
-
-  
-  
+  } 
 }
+
