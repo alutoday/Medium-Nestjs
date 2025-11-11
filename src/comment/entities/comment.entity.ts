@@ -7,6 +7,7 @@ export class CommentEntity {
     username: string;
     bio: string | null;
     image: string | null;
+    following: boolean;
   };
 
   constructor(comment: any) {
@@ -17,6 +18,8 @@ export class CommentEntity {
     this.author = {
       username: comment.author.username,
       bio: comment.author.bio,
-      image: comment.author.image,    };
+      image: comment.author.image,
+      following: comment.author.following || false,
+    };
   }
 }
