@@ -349,7 +349,5 @@ export class ArticleService {
     return this.buildSingleArticleResponse(article, userId);
   }
   
-  
 
-}
 
