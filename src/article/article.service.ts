@@ -298,5 +298,58 @@ export class ArticleService {
     });
     return !!follow;
   }
+
+
+  async favorite(slug: string, userId: number): Promise<FullArticle> {
+    const article = await this.prisma.article.findUnique({
+      where: { slug },
+      include: {
+        author: true,
+        tagList: true,
+      },
+    });
+
+    if (!article) throw new NotFoundException('Article not found');
+
+    await this.prisma.favoriteArticles.upsert({
+      where: {
+        userId_articleId: {
+          userId,
+          articleId: article.id,
+        },
+      },
+      create: {
+        userId,
+        articleId: article.id,
+      },
+      update: {},
+    });
+
+    return this.buildSingleArticleResponse(article, userId);
+  }
+
+  async unfavorite(slug: string, userId: number): Promise<FullArticle> {
+    const article = await this.prisma.article.findUnique({
+      where: { slug },
+      include: {
+        author: true,
+        tagList: true,
+      },
+    });
+
+    if (!article) throw new NotFoundException('Article not found');
+
+    await this.prisma.favoriteArticles.deleteMany({
+      where: {
+        userId,
+        articleId: article.id,
+      },
+    });
+
+    return this.buildSingleArticleResponse(article, userId);
+  }
+  
+  
+
 }
 
